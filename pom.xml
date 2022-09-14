@@ -8,8 +8,8 @@
     <artifactId>student-test-csv</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>homework-two</module>
         <module>homework-one</module>
+        <module>homework-two</module>
     </modules>
     <packaging>pom</packaging>
 
