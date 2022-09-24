@@ -1,0 +1,4 @@
+quiz:
+  questions:
+    csv:
+      path: /csv/questions.csv

@@ -1,0 +1,6 @@
+${AnsiColor.1}${AnsiBackground.233}    ____             _                 ___     ____     ____
+${AnsiBackground.235}   / __ \  __  __   (_) ____          /   |   / __ \   / __ \
+${AnsiBackground.237}  / / / / / / / /  / / /_  /         / /| |  / /_/ /  / /_/ /
+${AnsiBackground.239} /_/_/ / / /_/ /  / /   / /_        / ___ | / ____/  / ____/
+${AnsiBackground.241} \___\_\ \__,_/  /_/   /___/       /_/  |_|/_/      /_/
+${AnsiBackground.DEFAULT}${AnsiColor.DEFAULT}

@@ -10,6 +10,7 @@
     <modules>
         <module>homework-one</module>
         <module>homework-two</module>
+        <module>homework-three</module>
     </modules>
     <packaging>pom</packaging>
 
