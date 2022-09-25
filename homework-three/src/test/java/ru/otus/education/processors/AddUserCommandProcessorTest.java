@@ -1,5 +1,6 @@
 package ru.otus.education.processors;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +8,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import ru.otus.education.config.MessageSourceConfig;
 import ru.otus.education.model.User;
+import ru.otus.education.service.InternationalService;
 import ru.otus.education.service.QuizService;
 import ru.otus.education.service.menu.MenuOption;
 import ru.otus.education.service.processors.StudentInfoProcessor;
@@ -20,6 +25,7 @@ import static org.mockito.Mockito.verify;
 
 @DisplayName("Процессор команды внесения данных пользователя")
 @ExtendWith(MockitoExtension.class)
+@RequiredArgsConstructor
 class AddUserCommandProcessorTest {
 
     @Mock
@@ -27,6 +33,9 @@ class AddUserCommandProcessorTest {
 
     @Mock
     private QuizService quizService;
+
+    @Mock
+    private InternationalService internationalService;
 
     @InjectMocks
     private StudentInfoProcessor processor;
