@@ -1,8 +1,8 @@
 package ru.otus.education.service;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 import ru.otus.education.exceptions.MenuCommandProcessorNotFound;
 import ru.otus.education.exceptions.MenuItemIndexOutOfBoundsException;
@@ -13,17 +13,31 @@ import ru.otus.education.service.processors.MenuCommandsProcessor;
 import java.util.Comparator;
 import java.util.Scanner;
 
-@AllArgsConstructor
 @Slf4j
 @Service
-public class ApplicationServiceImpl implements ApplicationService {
+public class ApplicationServiceImpl implements ApplicationService, ApplicationRunner {
     private final MenuOptionsRegistry menuOptionsRegistry;
     private final MenuCommandsProcessor menuCommandsProcessor;
     private final ApplicationStopService applicationStopService;
     private final InternationalService internationalService;
 
+    public ApplicationServiceImpl(MenuOptionsRegistry menuOptionsRegistry
+            , MenuCommandsProcessor menuCommandsProcessor
+            , ApplicationStopService applicationStopService
+            , InternationalService internationalService) {
+        this.menuOptionsRegistry = menuOptionsRegistry;
+        this.menuCommandsProcessor = menuCommandsProcessor;
+        this.applicationStopService = applicationStopService;
+        this.internationalService = internationalService;
+    }
+
     @Override
     public void run(ApplicationArguments args) {
+        run();
+    }
+
+    @Override
+    public void run() {
         while (applicationStopService.isApplicationRunning()) {
             Scanner scanner = new Scanner(System.in);
             outputMenu();
@@ -31,19 +45,21 @@ public class ApplicationServiceImpl implements ApplicationService {
                 var selectedMenuItem = readSelectedOptionNumber(scanner);
                 processMenuCommand(selectedMenuItem);
             } catch (NumberFormatException e) {
-                log.info(internationalService.getMessage("exception.wrong-number", null));
+                throw new NumberFormatException(internationalService.getMessage("exception.wrong-number", null));
             } catch (MenuItemIndexOutOfBoundsException e) {
-                log.info(internationalService.getMessage("exception.wrong-option", null));
+                throw new MenuItemIndexOutOfBoundsException(internationalService.getMessage("exception.wrong-option", null));
             } catch (MenuCommandProcessorNotFound e) {
-                log.info(internationalService.getMessage("exception.wrong-handler", null));
+                throw new MenuCommandProcessorNotFound(internationalService.getMessage("exception.wrong-handler", null));
             }
         }
     }
 
     @Override
     public void processMenuCommand(int selectedMenuItemId) {
+        if (selectedMenuItemId > menuOptionsRegistry.getAvailableMenuOptions().size())
+            throw new MenuItemIndexOutOfBoundsException("Given menu item index is out of range");
         var selectedMenuOption = menuOptionsRegistry.getMenuOptionById(selectedMenuItemId)
-                .orElseThrow(() -> new MenuItemIndexOutOfBoundsException("Given menu item index is out of range"));
+                .orElseThrow(() -> new MenuCommandProcessorNotFound("Given menu item index is not present in menu"));
         menuCommandsProcessor.processMenuCommand(selectedMenuOption);
     }
 

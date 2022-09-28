@@ -15,12 +15,13 @@ import java.util.Scanner;
 @Slf4j
 public class QuizServiceImpl implements QuizService {
     private final ResultQuiz resultQuiz;
-    private final CsvTransfer csvTransfer;
+    private final CsvService csvService;
     private final InternationalService internationalService;
 
-    public QuizServiceImpl(CsvTransfer csvTransfer, InternationalService internationalService) {
+    public QuizServiceImpl(InternationalService internationalService,
+                           CsvService csvService) {
         this.resultQuiz = new ResultQuiz();
-        this.csvTransfer = csvTransfer;
+        this.csvService = csvService;
         this.internationalService = internationalService;
     }
 
@@ -33,6 +34,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void passQuiz() {
+        CsvTransfer csvTransfer = csvService.getCsvTransfer();
         Scanner scanner = new Scanner(System.in);
         if (resultQuiz.isUserDataSet() && !resultQuiz.isDone()) {
             log.info(internationalService.getMessage("exam.enter-correct-answer", null));
@@ -65,7 +67,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public void getResult() {
+    public ResultQuiz getResult() {
         if (resultQuiz.isPassed()) {
             log.info(internationalService.getMessage("exam.print-score", new String[]{String.valueOf(resultQuiz.getRightAnswers())}));
         } else if (resultQuiz.isDone()) {
@@ -73,5 +75,6 @@ public class QuizServiceImpl implements QuizService {
         } else {
             log.info(internationalService.getMessage("exam.quiz-not-passed", null));
         }
+        return resultQuiz;
     }
 }

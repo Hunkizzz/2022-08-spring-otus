@@ -2,14 +2,12 @@ package ru.otus.education.model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class CsvTransfer {
 
     private List<String[]> csvStringList;

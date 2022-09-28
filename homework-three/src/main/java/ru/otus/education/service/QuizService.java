@@ -1,5 +1,6 @@
 package ru.otus.education.service;
 
+import ru.otus.education.model.ResultQuiz;
 import ru.otus.education.model.User;
 
 public interface QuizService {
@@ -7,5 +8,5 @@ public interface QuizService {
 
     void passQuiz();
 
-    void getResult();
+    ResultQuiz getResult();
 }

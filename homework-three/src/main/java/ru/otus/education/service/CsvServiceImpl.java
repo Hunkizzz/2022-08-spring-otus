@@ -1,14 +1,12 @@
-package ru.otus.education.config;
+package ru.otus.education.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Service;
 import ru.otus.education.exceptions.ResourceNotFoundException;
 import ru.otus.education.model.CsvBean;
 import ru.otus.education.model.CsvTransfer;
@@ -19,18 +17,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.List;
+import java.io.UncheckedIOException;
 import java.util.Locale;
 
-@Configuration
-@RequiredArgsConstructor
+@Service
 @PropertySource(value = "application.yml")
-public class CsvConfig {
-    private final CsvTransfer csvTransfer;
+public class CsvServiceImpl implements CsvService {
     @Value("${quiz.questions.csv.path}")
     private String csvResourcePath;
 
-    @Bean
+    @Override
     public InputStream getCsvResourceAsStream() {
         if (csvResourcePath != null) {
             return getClass().getResourceAsStream(getCSVResourceName());
@@ -39,6 +35,7 @@ public class CsvConfig {
 
     }
 
+    @Override
     public String getCSVResourceName() {
         Locale locale = LocaleContextHolder.getLocale();
         String localeString = locale.toString();
@@ -47,15 +44,18 @@ public class CsvConfig {
         return String.format("%s_%s.%s", withoutExt, localeString, extension);
     }
 
-    @Bean
-    public List<CsvBean> readDataFromCsv() throws IOException {
+    @Override
+    public CsvTransfer getCsvTransfer() {
+        CsvTransfer csvTransfer = new CsvTransfer();
         try (Reader reader = new BufferedReader(new InputStreamReader(getCsvResourceAsStream()))) {
             CsvToBean<CsvBean> csvBeans = new CsvToBeanBuilder<CsvBean>(reader)
                     .withType(Quiz.class)
                     .build();
 
             csvTransfer.setCsvList(csvBeans.parse());
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
-        return csvTransfer.getCsvList();
+        return csvTransfer;
     }
 }

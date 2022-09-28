@@ -1,13 +1,9 @@
 package ru.otus.education.service;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-
 import java.util.Scanner;
 
-public interface ApplicationService extends ApplicationRunner {
-    @Override
-    void run(ApplicationArguments args);
+public interface ApplicationService {
+    void run();
 
     void processMenuCommand(int selectedMenuItemId);
 
