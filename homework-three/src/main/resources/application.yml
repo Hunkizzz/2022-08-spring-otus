@@ -1,0 +1,18 @@
+spring:
+  messages:
+    basename: "i18n/appmessages"
+    encoding: "UTF-8"
+menu:
+  option:
+    user: Please enter your name and surname
+    start: Start test
+    result: Get result
+    exit: Exit
+
+quiz:
+  questions:
+    csv:
+      path: /csv/questions.csv
+
+application:
+  confirm-exit: true
