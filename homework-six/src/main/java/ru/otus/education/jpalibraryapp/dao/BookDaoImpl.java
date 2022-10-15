@@ -1,0 +1,100 @@
+package ru.otus.education.jpalibraryapp.dao;
+
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.springframework.stereotype.Repository;
+import ru.otus.education.jpalibraryapp.model.Book;
+
+import javax.persistence.EntityGraph;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+@RequiredArgsConstructor
+public class BookDaoImpl implements BookDao {
+
+    @PersistenceContext
+    private final EntityManager entityManager;
+
+    @Override
+    public Book save(Book book) {
+        return entityManager.merge(book);
+    }
+
+    @Override
+    public Optional<Book> findById(long id) {
+        return Optional.ofNullable(entityManager.find(Book.class, id));
+    }
+
+    @Override
+    public List<Book> findAll() {
+        EntityGraph<?> entityGraph = entityManager.getEntityGraph("author_genre_entity_graph");
+        TypedQuery<Book> query = entityManager.createQuery("select book " +
+                "from Book book", Book.class);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Book> findByName(String title) {
+        EntityGraph<?> entityGraph = entityManager.getEntityGraph("author_genre_entity_graph");
+        TypedQuery<Book> query = entityManager.createQuery("select book " +
+                "from Book book " +
+                "where book.title=:title", Book.class);
+        query.setParameter("title", title);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
+        return query.getResultList();
+    }
+
+    @Override
+    public void updateNameById(long id, String name) {
+        Query query = entityManager.createQuery("update Book book " +
+                "set book.title=:name " +
+                "where book.id=:id");
+        query.setParameter("id", id);
+        query.setParameter("name", name);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Query query = entityManager.createQuery("delete " +
+                "from Book book " +
+                "where book.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public long getCount() {
+        return entityManager.createQuery("select count(book) from Book book", Long.class).getSingleResult();
+    }
+
+    @Override
+    public List<Book> findAllBooksByAuthorId(long id) {
+        EntityGraph<?> entityGraph = entityManager.getEntityGraph("author_genre_entity_graph");
+        TypedQuery<Book> query = entityManager.createQuery("select book from Book book where book.author.id=:id", Book.class);
+        query.setParameter("id", id);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Book> findAllWithComments() {
+        return null;
+    }
+
+    @Override
+    public List<ImmutablePair<Book, Long>> findAllBooksWithCommentsCount() {
+        Query query = entityManager.createQuery(
+                "select new org.apache.commons.lang3.tuple.ImmutablePair (comment.book, count(comment)) " +
+                        "from Comment comment " +
+                        "group by comment.book");
+        return query.getResultList();
+    }
+
+}
