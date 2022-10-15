@@ -69,7 +69,7 @@ public class BookServiceImpl implements BookService {
         String genreName = ioService.read();
         ioService.write("Введите имя автора");
         String authorName = ioService.read();
-        ioService.write("Введите имя автора");
+        ioService.write("Введите фамилию автора");
         String authorSurname = ioService.read();
         Author author = authorService.findByNameAndSurname(authorName, authorSurname);
         if (author == null) author = new Author(authorName, authorSurname);
