@@ -108,7 +108,8 @@ public class ShellController {
         ioService.write("Введите Id автора для отображения списка его книг");
         long id = ioService.readInt();
         List<Book> books = bookService.findAllBooksByAuthorId(id);
-        ioService.write("Книги автора: " + authorService.findById(id).getName());
+        Author author = authorService.findById(id);
+        ioService.write("Книги автора: " + author.getName() + " " + author.getSurname());
         books.forEach(book -> ioService.write(book.getTitle()));
     }
 
@@ -117,7 +118,8 @@ public class ShellController {
         ioService.write("Введите Id автора для отображения всех комментариев к его книгам");
         long id = ioService.readInt();
         List<Comment> comments = commentService.findAllCommentsByAuthorId(id);
-        ioService.write("Комментарии к книгам автора: " + authorService.findById(id).getName());
+        Author author = authorService.findById(id);
+        ioService.write("Комментарии к книгам автора: " + author.getName() + " " + author.getSurname());
         comments.forEach(comment -> ioService.write("Книга: " + comment.getBook().getTitle() + ". Комментарий: " + comment.getText()));
     }
 
