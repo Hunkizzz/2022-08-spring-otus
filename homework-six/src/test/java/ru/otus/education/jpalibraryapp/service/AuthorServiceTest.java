@@ -31,7 +31,7 @@ class AuthorServiceTest {
     @BeforeAll
     public void init() {
         MockitoAnnotations.openMocks(this);
-        doReturn(new Author(1L,"тест", "тест")).when(authorDao).findByNameAndSurname(anyString(), anyString());
+        doReturn(new Author(1L, "тест", "тест")).when(authorDao).findByNameAndSurname(anyString(), anyString());
         doReturn(Optional.of(new Author(1L, "тест", "тест"))).when(authorDao).findById(anyLong());
     }
 

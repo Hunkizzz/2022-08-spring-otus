@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.education.jpalibraryapp.dao.GenreDao;
 import ru.otus.education.jpalibraryapp.model.Genre;
+
 import java.util.Optional;
 
 @Service

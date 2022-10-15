@@ -1,7 +1,6 @@
 package ru.otus.education.jpalibraryapp.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.education.jpalibraryapp.model.Author;
@@ -124,8 +123,8 @@ public class ShellController {
 
     @ShellMethod(key = {"bookListWithCommentsCountGroupBy", "blwc"}, value = "show all books and comments counts")
     public void showAllBooksWithComments() {
-        Map<Book,Long> books = bookService.findAllBooksWithCommentsCount();
-        for(Map.Entry<Book,Long> entry: books.entrySet()){
+        Map<Book, Long> books = bookService.findAllBooksWithCommentsCount();
+        for (Map.Entry<Book, Long> entry : books.entrySet()) {
             ioService.write(entry.getKey().toString());
             ioService.write("Количество комментариев: " + entry.getValue());
         }

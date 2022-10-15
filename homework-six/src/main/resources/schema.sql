@@ -1,16 +1,16 @@
 drop table if exists comment;
 create table comment
 (
-    id   bigint primary key auto_increment,
-    text varchar2(255),
+    id      bigint primary key auto_increment,
+    text    varchar2(255),
     book_id bigint
 );
 
 drop table if exists book;
 create table book
 (
-    id       bigint primary key auto_increment,
-    title    varchar2(255),
+    id        bigint primary key auto_increment,
+    title     varchar2(255),
     genre_id  bigint,
     author_id bigint
 );
@@ -43,4 +43,4 @@ alter table book
 
 alter table comment
     add constraint fk_commentBook
-        foreign key (book_id) references book(Id) ON DELETE CASCADE;
+        foreign key (book_id) references book (Id) ON DELETE CASCADE;

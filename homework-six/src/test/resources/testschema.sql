@@ -1,8 +1,8 @@
 drop table if exists comment;
 create table comment
 (
-    id   bigint primary key auto_increment,
-    text varchar(255),
+    id      bigint primary key auto_increment,
+    text    varchar(255),
     book_id bigint
 );
 
