@@ -30,24 +30,26 @@ import java.util.List;
 @Table(name = "book")
 @NamedEntityGraph(name = "author_genre_entity_graph", attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre")})
 public class Book {
-    @OneToMany(fetch = FetchType.EAGER
-            , cascade = {CascadeType.PERSIST
-            , CascadeType.MERGE
-            , CascadeType.REFRESH}
-            , mappedBy = "book")
-    @Fetch(FetchMode.JOIN)
-    List<Comment> comments;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "title")
     private String title;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "author_id")
     private Author author;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    @OneToMany(fetch = FetchType.EAGER
+            , orphanRemoval = true
+            , mappedBy = "book")
+    @Fetch(FetchMode.JOIN)
+    List<Comment> comments;
 
     @Override
     public String toString() {
