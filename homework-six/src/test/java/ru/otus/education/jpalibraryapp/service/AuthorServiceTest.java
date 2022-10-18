@@ -31,8 +31,14 @@ class AuthorServiceTest {
     @BeforeAll
     public void init() {
         MockitoAnnotations.openMocks(this);
-        doReturn(new Author(1L, "тест", "тест")).when(authorDao).findByNameAndSurname(anyString(), anyString());
-        doReturn(Optional.of(new Author(1L, "тест", "тест"))).when(authorDao).findById(anyLong());
+        doReturn(Author.builder().id(1L)
+                .name("тест")
+                .surname("тест")
+                .build()).when(authorDao).findByNameAndSurname(anyString(), anyString());
+        doReturn(Optional.of(Author.builder().id(1L)
+                .name("тест")
+                .surname("тест")
+                .build())).when(authorDao).findById(anyLong());
     }
 
     @DisplayName("должен возвращать корректную запись")

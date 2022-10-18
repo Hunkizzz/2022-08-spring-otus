@@ -24,7 +24,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Comment> findByBookId(long id) {
         return commentDao.findByBookId(id);
     }
@@ -61,11 +60,5 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Comment> findAllCommentsByAuthorId(long id) {
         return commentDao.findAllCommentsByAuthorId(id);
-    }
-
-    @Override
-    @Transactional
-    public void deleteByBookId(long id) {
-        commentDao.deleteByBookId(id);
     }
 }

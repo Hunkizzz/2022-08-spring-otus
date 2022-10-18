@@ -51,22 +51,8 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void updateNameById(long id, String name) {
-        Query query = entityManager.createQuery("update Book book " +
-                "set book.title=:name " +
-                "where book.id=:id");
-        query.setParameter("id", id);
-        query.setParameter("name", name);
-        query.executeUpdate();
-    }
-
-    @Override
-    public void deleteById(long id) {
-        Query query = entityManager.createQuery("delete " +
-                "from Book book " +
-                "where book.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteById(Book book) {
+        entityManager.remove(book);
     }
 
     @Override

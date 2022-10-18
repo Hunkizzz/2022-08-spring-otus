@@ -25,7 +25,10 @@ class AuthorDaoImplTest {
     @DisplayName("Должен добавлять автора в БД")
     @Test
     void shouldInsertAuthor() {
-        Author author = new Author("тест5", "тест5");
+        Author author = Author.builder()
+                .name("тест5")
+                .surname("тест5")
+                .build();
         authorDao.save(author);
         Author actualAuthor = authorDao.findByNameAndSurname("тест5", "тест5");
         Assertions.assertThat(actualAuthor.getName()).isEqualTo(author.getName());

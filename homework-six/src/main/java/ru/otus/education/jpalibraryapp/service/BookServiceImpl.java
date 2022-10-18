@@ -51,13 +51,22 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void updateNameById(long id, String name) {
-        bookDao.updateNameById(id, name);
+        Optional<Book> optionalBook = bookDao.findById(id);
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            book.setTitle(name);
+            bookDao.save(book);
+        }
     }
 
     @Override
     @Transactional
     public void deleteById(long id) {
-        bookDao.deleteById(id);
+        Optional<Book> optionalBook = bookDao.findById(id);
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            bookDao.deleteById(book);
+        }
     }
 
     @Override
@@ -72,10 +81,18 @@ public class BookServiceImpl implements BookService {
         ioService.write("Введите фамилию автора");
         String authorSurname = ioService.read();
         Author author = authorService.findByNameAndSurname(authorName, authorSurname);
-        if (author == null) author = new Author(authorName, authorSurname);
+        if (author == null)
+            author = Author.builder()
+                    .name(authorName)
+                    .surname(authorSurname)
+                    .build();
         Genre genre = genreService.findByName(genreName);
         if (genre == null) genre = new Genre(genreName);
-        Book book = new Book(title, genre, author);
+        Book book = Book.builder()
+                .title(title)
+                .genre(genre)
+                .author(author)
+                .build();
         bookDao.save(book);
     }
 

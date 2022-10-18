@@ -63,13 +63,4 @@ public class CommentDaoImpl implements CommentDao {
         query.setParameter("id", id);
         return query.getResultList();
     }
-
-    @Override
-    public void deleteByBookId(long id) {
-        Query query = entityManager.createQuery("delete " +
-                "from Comment comment " +
-                "where comment.book.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
-    }
 }

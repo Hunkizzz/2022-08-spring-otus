@@ -50,9 +50,14 @@ class BookDaoImplTest {
     @DisplayName("добавлять книгу в БД")
     @Test
     void shouldInsertBook() {
-        Book book = new Book(NEW_BOOK_ID, NEW_BOOK_TITLE,
-                new Author(1L, "Федор", "Достоевский"),
-                new Genre(1L, "Роман"));
+        Book book = Book.builder().id(NEW_BOOK_ID)
+                .title(NEW_BOOK_TITLE)
+                .author(Author.builder().id(1L)
+                        .name("Федор")
+                        .surname("Достоевский")
+                        .build())
+                .genre(new Genre(1L, "Роман"))
+                .build();
         bookDao.save(book);
         Optional<Book> actualBook = bookDao.findById(NEW_BOOK_ID);
         Assertions.assertThat(actualBook.orElse(null)).isEqualTo(book);
@@ -61,9 +66,16 @@ class BookDaoImplTest {
     @DisplayName("должен корректно сохранять книгу в бд")
     @Test
     void shouldSaveBook() {
-        val author = new Author(1L, "Федор", "Достоевский");
+        val author = Author.builder().id(1L)
+                .name("Федор")
+                .surname("Достоевский")
+                .build();
         val genre = new Genre(1L, "Роман");
-        var book = new Book(NEW_BOOK_TITLE, genre, author);
+        var book = Book.builder()
+                .title(NEW_BOOK_TITLE)
+                .genre(genre)
+                .author(author)
+                .build();
         book = bookDao.save(book);
 
         assertThat(book.getId()).isPositive();
@@ -106,8 +118,9 @@ class BookDaoImplTest {
         val firstBook = em.find(Book.class, FIRST_BOOK_ID);
         String oldName = firstBook.getTitle();
         em.clear();
-
-        bookDao.updateNameById(FIRST_BOOK_ID, NEW_BOOK_TITLE);
+        Book book = bookDao.findById(FIRST_BOOK_ID).get();
+        book.setTitle(NEW_BOOK_TITLE);
+        bookDao.save(book);
         val updatedBook = em.find(Book.class, FIRST_BOOK_ID);
 
         assertThat(updatedBook.getTitle()).isNotEqualTo(oldName).isEqualTo(NEW_BOOK_TITLE);
@@ -117,8 +130,8 @@ class BookDaoImplTest {
     @Test
     void shouldDeleteBookNameById() {
         em.clear();
-        commentDao.deleteByBookId(FIRST_BOOK_ID);
-        bookDao.deleteById(FIRST_BOOK_ID);
+        Book book = bookDao.findById(FIRST_BOOK_ID).get();
+        bookDao.deleteById(book);
         val deletedBook = em.find(Book.class, FIRST_BOOK_ID);
         assertThat(deletedBook).isNull();
     }

@@ -32,9 +32,16 @@ class BookServiceTest {
     @BeforeAll
     public void init() {
         MockitoAnnotations.openMocks(this);
-        Author author = new Author("тест", "тест");
+        Author author = Author.builder().name("тест")
+                .surname("тест")
+                .build();
         Genre genre = new Genre(1L, "test");
-        Book book = new Book(1L, "test", author, genre);
+        Book book = Book.builder()
+                .id(1L)
+                .title("test")
+                .author(author)
+                .genre(genre)
+                .build();
         doReturn(Optional.of(book)).when(bookDao).findById(anyLong());
     }
 
