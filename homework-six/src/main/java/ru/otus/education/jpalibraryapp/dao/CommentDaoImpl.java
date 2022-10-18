@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,6 +26,11 @@ public class CommentDaoImpl implements CommentDao {
         } else {
             return entityManager.merge(comment);
         }
+    }
+
+    @Override
+    public Optional<Comment> findById(long id) {
+        return Optional.ofNullable(entityManager.find(Comment.class, id));
     }
 
     @Override
@@ -47,12 +53,8 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Query query = entityManager.createQuery("delete " +
-                "from Comment comment " +
-                "where comment.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteById(Comment comment) {
+        entityManager.remove(comment);
     }
 
     @Override

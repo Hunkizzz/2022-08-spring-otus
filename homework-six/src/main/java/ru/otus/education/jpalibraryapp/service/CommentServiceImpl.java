@@ -9,6 +9,7 @@ import ru.otus.education.jpalibraryapp.model.Book;
 import ru.otus.education.jpalibraryapp.model.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteById(long id) {
-        commentDao.deleteById(id);
+        Optional<Comment> comment = commentDao.findById(id);
+        comment.ifPresent(commentDao::deleteById);
     }
 
     @Override
