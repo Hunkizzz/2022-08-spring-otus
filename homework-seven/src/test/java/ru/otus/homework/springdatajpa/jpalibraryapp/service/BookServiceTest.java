@@ -15,7 +15,6 @@ import ru.otus.homework.springdatajpa.model.Book;
 import ru.otus.homework.springdatajpa.model.Genre;
 import ru.otus.homework.springdatajpa.service.BookServiceImpl;
 
-
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
