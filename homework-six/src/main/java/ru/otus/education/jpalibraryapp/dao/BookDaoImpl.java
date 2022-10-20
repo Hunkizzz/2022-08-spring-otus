@@ -2,7 +2,7 @@ package ru.otus.education.jpalibraryapp.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.education.jpalibraryapp.model.Book;
 
 import javax.persistence.EntityGraph;
@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
 
