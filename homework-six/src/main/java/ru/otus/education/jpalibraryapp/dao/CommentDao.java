@@ -10,10 +10,6 @@ public interface CommentDao {
 
     Optional<Comment> findById(long id);
 
-    List<Comment> findByBookId(long id);
-
-    void updateTextById(long id, String text);
-
     void deleteById(Comment comment);
 
     List<Comment> findAllCommentsByAuthorId(long id);

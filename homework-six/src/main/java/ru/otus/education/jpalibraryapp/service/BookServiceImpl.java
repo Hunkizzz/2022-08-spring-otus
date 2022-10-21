@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final IOService ioService;
     private final BookDao bookDao;
     private final GenreService genreService;
     private final AuthorService authorService;
@@ -71,15 +70,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void addNewBook() {
-        ioService.write("Введите наименование книги");
-        String title = ioService.read();
-        ioService.write("Введите жанр");
-        String genreName = ioService.read();
-        ioService.write("Введите имя автора");
-        String authorName = ioService.read();
-        ioService.write("Введите фамилию автора");
-        String authorSurname = ioService.read();
+    public void addNewBook(String title,
+                           String genreName,
+                           String authorName,
+                           String authorSurname) {
         Author author = authorService.findByNameAndSurname(authorName, authorSurname);
         if (author == null)
             author = Author.builder()

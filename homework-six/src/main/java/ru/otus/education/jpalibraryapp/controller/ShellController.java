@@ -30,7 +30,15 @@ public class ShellController {
 
     @ShellMethod(key = {"bookAdd", "ba"}, value = "add book to library")
     public void addBook() {
-        bookService.addNewBook();
+        ioService.write("Введите наименование книги");
+        String title = ioService.read();
+        ioService.write("Введите жанр");
+        String genreName = ioService.read();
+        ioService.write("Введите имя автора");
+        String authorName = ioService.read();
+        ioService.write("Введите фамилию автора");
+        String authorSurname = ioService.read();
+        bookService.addNewBook(title, genreName, authorName, authorSurname);
     }
 
     @ShellMethod(key = {"bookGetById", "bgbi"}, value = "get book by Id")
@@ -69,7 +77,11 @@ public class ShellController {
 
     @ShellMethod(key = {"commentAdd", "ca"}, value = "add comment to book by Id")
     public void addCommentToBookById() {
-        commentService.addNewComment();
+        ioService.write("Введите id книги для добавления комментария");
+        int bookId = ioService.readInt();
+        ioService.write("Введите комментарий");
+        String commentText = ioService.read();
+        commentService.addNewComment(bookId, commentText);
     }
 
     @ShellMethod(key = {"commentShowAll", "csha"}, value = "show all comments to book by Id")
@@ -108,19 +120,25 @@ public class ShellController {
         ioService.write("Введите Id автора для отображения списка его книг");
         long id = ioService.readInt();
         List<Book> books = bookService.findAllBooksByAuthorId(id);
-        Author author = authorService.findById(id);
-        ioService.write("Книги автора: " + author.getName() + " " + author.getSurname());
-        books.forEach(book -> ioService.write(book.getTitle()));
+        if (!books.isEmpty()) {
+            Author author = books.get(0).getAuthor();
+            ioService.write("Книги автора: " + author.getName() + " " + author.getSurname());
+            books.forEach(book -> ioService.write(book.getTitle()));
+        }
+        ioService.write("В базе нет книг указанного автора");
     }
 
     @ShellMethod(key = {"commentListByAuthorId", "clbai"}, value = "show all comments to all books by author id")
     public void showAllCommentsByAuthorId() {
         ioService.write("Введите Id автора для отображения всех комментариев к его книгам");
-        long id = ioService.readInt();
-        List<Comment> comments = commentService.findAllCommentsByAuthorId(id);
-        Author author = authorService.findById(id);
-        ioService.write("Комментарии к книгам автора: " + author.getName() + " " + author.getSurname());
-        comments.forEach(comment -> ioService.write("Книга: " + comment.getBook().getTitle() + ". Комментарий: " + comment.getText()));
+        long authorId = ioService.readInt();
+        List<Comment> comments = commentService.findAllCommentsByAuthorId(authorId);
+        if (!comments.isEmpty()) {
+            Author author = comments.get(0).getBook().getAuthor();
+            ioService.write("Комментарии к книгам автора: " + author.getName() + " " + author.getSurname());
+            comments.forEach(comment -> ioService.write("Книга: " + comment.getBook().getTitle() + ". Комментарий: " + comment.getText()));
+        }
+        ioService.write("У данного автора нет комментариев к книгам");
     }
 
     @ShellMethod(key = {"bookListWithCommentsCountGroupBy", "blwc"}, value = "show all books and comments counts")

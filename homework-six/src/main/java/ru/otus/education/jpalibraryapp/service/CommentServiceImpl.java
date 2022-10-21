@@ -15,7 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentDao commentDao;
-    private final IOService ioService;
     private final BookService bookService;
 
     @Override
@@ -26,13 +25,19 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findByBookId(long id) {
-        return commentDao.findByBookId(id);
+        Book book = bookService.findById(id);
+        return book.getComments();
     }
 
     @Override
     @Transactional
     public void updateTextById(long id, String text) {
-        commentDao.updateTextById(id, text);
+        Optional<Comment> commentOptional = commentDao.findById(id);
+        if (commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            comment.setText(text);
+            commentDao.save(comment);
+        }
     }
 
     @Override
@@ -44,17 +49,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void addNewComment() {
-        ioService.write("Введите id книги для добавления комментария");
-        int bookId = ioService.readInt();
+    public void addNewComment(int bookId, String commentText) {
         Book book = bookService.findById(bookId);
         if (book != null) {
-            ioService.write("Введите комментарий - " + book.getTitle());
-            String commentText = ioService.read();
             Comment comment = new Comment(commentText, book);
             commentDao.save(comment);
-        } else {
-            ioService.write("Книга не найдена");
         }
     }
 
