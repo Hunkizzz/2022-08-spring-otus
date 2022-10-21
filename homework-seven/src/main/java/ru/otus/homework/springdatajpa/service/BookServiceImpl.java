@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class BookServiceImpl implements BookService {
     private final IOService ioService;
     private final BookDao bookDao;
@@ -30,20 +31,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Book findById(long id) {
         Optional<Book> book = bookDao.findById(id);
         return book.orElse(null);
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Book> findAll() {
         return bookDao.findAll();
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Book> findByName(String name) {
         return bookDao.findBooksByTitle(name);
     }
@@ -97,19 +95,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public long getCount() {
         return bookDao.count();
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Book> findAllBooksByAuthorId(long id) {
         return bookDao.findAllByAuthorId(id);
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Map<Book, Long> findAllBooksWithCommentsCount() {
         List<ImmutablePair<Book, Long>> pairList = bookDao.findAllBooksWithCommentsCount();
         Map<Book, Long> bookMap = new HashMap<>();

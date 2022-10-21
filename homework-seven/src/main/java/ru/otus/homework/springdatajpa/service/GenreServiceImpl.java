@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class GenreServiceImpl implements GenreService {
     private final GenreDao genreDao;
 
@@ -21,14 +22,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Optional<Genre> findById(long id) {
         return genreDao.findById(id);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Genre findByName(String name) {
         return genreDao.findByName(name);
     }

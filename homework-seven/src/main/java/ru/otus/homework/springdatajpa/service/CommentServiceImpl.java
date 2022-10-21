@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class CommentServiceImpl implements CommentService {
     private final CommentDao commentDao;
     private final IOService ioService;
@@ -32,7 +33,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void updateTextById(long id, String text) {
-        commentDao.updateTextById(id, text);
+        Optional<Comment> commentOptional = commentDao.findById(id);
+        if (commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            comment.setText(text);
+            commentDao.save(comment);
+        }
+
     }
 
     @Override
@@ -59,7 +66,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Comment> findAllCommentsByAuthorId(long id) {
         return commentDao.findAllByBookAuthorId(id);
     }

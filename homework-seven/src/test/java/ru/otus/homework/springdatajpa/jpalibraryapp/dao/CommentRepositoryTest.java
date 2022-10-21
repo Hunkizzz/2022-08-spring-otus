@@ -43,7 +43,7 @@ class CommentRepositoryTest {
     @DisplayName("должен загружать все комментарии к книге по её Id")
     @Test
     void shouldFindAllCommentsByBookId() {
-        val comments = commentRepository.findAllByBook_Id(FIRST_BOOK_ID);
+        val comments = commentRepository.findAllByBookId(FIRST_BOOK_ID);
         assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_COMMENTS)
                 .allMatch(comment -> !comment.getText().equals(""))
                 .allMatch(comment -> comment.getBook().getTitle() != null);
@@ -56,19 +56,4 @@ class CommentRepositoryTest {
         val deletedComment = em.find(Comment.class, FIRST_COMMENT_ID);
         assertThat(deletedComment).isNull();
     }
-
-    @DisplayName(" должен редактировать комментарий по его Id")
-    @Test
-    void shouldEditCommentTextById() {
-        val firstComment = em.find(Comment.class, FIRST_COMMENT_ID);
-        String oldText = firstComment.getText();
-        em.clear();
-
-        commentRepository.updateTextById(FIRST_COMMENT_ID, NEW_COMMENT_TEXT);
-        val updateComment = em.find(Comment.class, FIRST_COMMENT_ID);
-
-        assertThat(updateComment.getText()).isNotEqualTo(oldText).isEqualTo(NEW_COMMENT_TEXT);
-    }
-
-
 }
