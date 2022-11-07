@@ -1,0 +1,9 @@
+Spring:
+  data:
+    mongodb:
+      database: test
+      host: localhost
+      port: 27017
+mongock:
+  change-logs-scan-package: ru.otus.education.bookrepositorymongo.mongorepository.changelogs
+  runner-type: InitializingBean
