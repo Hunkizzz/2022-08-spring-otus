@@ -8,7 +8,6 @@ import ru.otus.education.web.demo.domain.Book;
 import ru.otus.education.web.demo.domain.Genre;
 import ru.otus.education.web.demo.repo.BookRepository;
 
-
 import java.util.List;
 
 @Service

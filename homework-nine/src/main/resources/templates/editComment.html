@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <h1 class="h1" th:if="${comment.id}">Edit comment</h1>
     <h1 class="h1" th:unless="${comment.id}">New comment</h1>
-    <form action="#" method="post" th:action="@{/comment/addcomment}" th:object="${comment}">
+    <form action="#" method="post" th:action="@{/comment/create/comment}" th:object="${comment}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
             <label for="title">Комментарий</label>

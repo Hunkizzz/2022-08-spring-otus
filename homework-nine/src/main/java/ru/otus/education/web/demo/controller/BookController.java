@@ -29,13 +29,13 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/addbook")
+    @GetMapping("/create/book")
     public String addBook(Model model) {
         model.addAttribute("book", new Book(new Author(), new Genre()));
         return "edit";
     }
 
-    @PostMapping("/addbook")
+    @PostMapping("/create/book")
     public String addBook(@ModelAttribute Book book) {
         bookService.addOrSaveBook(book);
         return "redirect:/";

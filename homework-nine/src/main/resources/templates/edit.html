@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <h1 class="h1" th:if="${book.id}">Edit book</h1>
     <h1 class="h1" th:unless="${book.id}">New book</h1>
-    <form action="#" method="post" th:action="@{/addbook}" th:object="${book}">
+    <form action="#" method="post" th:action="@{/create/book}" th:object="${book}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
             <label for="title">Наименование книги</label>

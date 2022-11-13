@@ -26,14 +26,14 @@ public class CommentController {
         return "redirect:/view/" + id;
     }
 
-    @GetMapping(value = "/addcomment", params = "bookId")
+    @GetMapping(value = "/create/comment", params = "bookId")
     public String addComment(@RequestParam("bookId") Book book,
                              Model model) {
         model.addAttribute("comment", new Comment("", book));
         return "editComment";
     }
 
-    @PostMapping("/addcomment")
+    @PostMapping("/create/comment")
     public String addBook(@ModelAttribute Comment comment) {
         commentService.addOrSaveComment(comment);
         return "redirect:/view/" + comment.getBook().getId();
