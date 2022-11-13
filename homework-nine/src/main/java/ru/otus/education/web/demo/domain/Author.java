@@ -1,6 +1,7 @@
 package ru.otus.education.web.demo.domain;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "author")
 public class Author {
     @Id
@@ -26,4 +28,6 @@ public class Author {
     public Author(String name) {
         this.name = name;
     }
+
+
 }
