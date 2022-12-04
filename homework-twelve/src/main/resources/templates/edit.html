@@ -17,19 +17,19 @@
         </div>
         <div class="form-group">
             <label for="author">Имя автора</label>
-            <select th:field="*{author.name}"  class="form-control" id="author" name="author">
+            <select class="form-control" id="author" name="author" th:field="*{author.name}">
                 <option th:each="author : ${authors}"
-                        th:value="${author.name}"
-                        th:text="${author.name}">
+                        th:text="${author.name}"
+                        th:value="${author.name}">
                 </option>
             </select>
         </div>
         <div class="form-group">
             <label for="genre">Жанр</label>
-            <select th:field="*{genre.name}"  class="form-control" id="genre" name="genre">
+            <select class="form-control" id="genre" name="genre" th:field="*{genre.name}">
                 <option th:each="genre : ${genres}"
-                        th:value="${genre.name}"
-                        th:text="${genre.name}">
+                        th:text="${genre.name}"
+                        th:value="${genre.name}">
                 </option>
             </select>
         </div>

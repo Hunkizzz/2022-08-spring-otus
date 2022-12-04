@@ -32,7 +32,7 @@ create table author
 drop table if exists users;
 CREATE TABLE users
 (
-    id   bigint primary key auto_increment,
+    id       bigint primary key auto_increment,
     username VARCHAR(50)  NOT NULL,
     password VARCHAR(100) NOT NULL,
     enabled  TINYINT      NOT NULL DEFAULT 1
@@ -42,7 +42,7 @@ drop table if exists authorities;
 CREATE TABLE authorities
 (
     id          bigint primary key auto_increment,
-    username_id bigint NOT NULL,
+    username_id bigint      NOT NULL,
     authority   VARCHAR(50) NOT NULL,
     FOREIGN KEY (username_id) REFERENCES users (id)
 );

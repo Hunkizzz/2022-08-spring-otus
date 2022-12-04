@@ -26,8 +26,12 @@ values ('Very good book', 1);
 insert into comment (text, book_id)
 values ('Very intresting', 2);
 
-insert into users (username,password, enabled) values('user', 'password', true);
-insert into users (username,password, enabled) values('admin', 'password', true);
+insert into users (username, password, enabled)
+values ('user', 'password', true);
+insert into users (username, password, enabled)
+values ('admin', 'password', true);
 
-insert into authorities (username_id, authority) values(2, 'ADMIN');
-insert into authorities (username_id, authority) values(1, 'USER');
+insert into authorities (username_id, authority)
+values (2, 'ADMIN');
+insert into authorities (username_id, authority)
+values (1, 'USER');

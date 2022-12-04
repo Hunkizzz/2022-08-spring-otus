@@ -6,7 +6,6 @@ import ru.otus.education.spring.security.springsecurity.domain.Book;
 import ru.otus.education.spring.security.springsecurity.domain.Comment;
 import ru.otus.education.spring.security.springsecurity.repo.CommentRepository;
 
-
 import java.util.List;
 
 @Service

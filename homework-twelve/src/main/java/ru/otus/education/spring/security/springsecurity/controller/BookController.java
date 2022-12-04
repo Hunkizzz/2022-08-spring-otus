@@ -16,7 +16,6 @@ import ru.otus.education.spring.security.springsecurity.service.BookService;
 import ru.otus.education.spring.security.springsecurity.service.CommentService;
 import ru.otus.education.spring.security.springsecurity.service.GenreService;
 
-
 import java.util.List;
 
 @Controller
