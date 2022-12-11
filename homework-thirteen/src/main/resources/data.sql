@@ -22,16 +22,24 @@ values ('Конец вечности', 3, 3);
 insert into comment (text, book_id, user_id)
 values ('Good book', 1, 1);
 insert into comment (text, book_id, user_id)
-values ('Very good book', 1,2);
+values ('Very good book', 1, 2);
 insert into comment (text, book_id, user_id)
 values ('Very interesting', 2, 4);
 
-insert into users (id,username,password) values(1, 'admin','password');
-insert into users (id,username,password) values(2, 'user','user');
-insert into users (id,username,password) values(3, 'user2','user');
-insert into users (id,username,password) values(4, 'user3','user');
+insert into users (id, username, password)
+values (1, 'admin', 'password');
+insert into users (id, username, password)
+values (2, 'user', 'user');
+insert into users (id, username, password)
+values (3, 'user2', 'user');
+insert into users (id, username, password)
+values (4, 'user3', 'user');
 
-insert into user_role (user_id,roles) values (1,'ADMIN');
-insert into user_role (user_id,roles) values (2,'USER');
-insert into user_role (user_id,roles) values (3,'BANNED_USER');
-insert into user_role (user_id,roles) values (4,'USER');
+insert into user_role (user_id, roles)
+values (1, 'ADMIN');
+insert into user_role (user_id, roles)
+values (2, 'USER');
+insert into user_role (user_id, roles)
+values (3, 'BANNED_USER');
+insert into user_role (user_id, roles)
+values (4, 'USER');

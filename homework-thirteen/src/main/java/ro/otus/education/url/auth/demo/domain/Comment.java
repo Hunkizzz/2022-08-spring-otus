@@ -39,6 +39,7 @@ public class Comment {
         this.book = book;
         this.user = user;
     }
+
     @Override
     public String toString() {
         return "[" + id + "]" + " " + text + ".";
@@ -48,28 +49,28 @@ public class Comment {
         return this.id;
     }
 
-    public String getText() {
-        return this.text;
-    }
-
-    public Book getBook() {
-        return this.book;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getText() {
+        return this.text;
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
+    public Book getBook() {
+        return this.book;
+    }
+
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     public void setUser(User user) {

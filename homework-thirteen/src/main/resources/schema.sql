@@ -34,14 +34,14 @@ drop table if exists user_role;
 create table user_role
 (
     user_id bigint,
-    roles varchar(255)
+    roles   varchar(255)
 );
 
 drop table if exists users;
 create table users
 (
-    id   bigint primary key auto_increment,
-    username  varchar(255) unique,
+    id       bigint primary key auto_increment,
+    username varchar(255) unique,
     password varchar(255)
 );
 
@@ -62,4 +62,4 @@ alter table comment
 
 alter table user_role
     add constraint fk_user_role_user
-        foreign key (user_id) references users(Id);
+        foreign key (user_id) references users (Id);
