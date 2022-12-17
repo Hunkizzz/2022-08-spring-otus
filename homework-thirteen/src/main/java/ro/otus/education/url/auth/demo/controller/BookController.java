@@ -1,7 +1,6 @@
 package ro.otus.education.url.auth.demo.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,14 +33,12 @@ public class BookController {
         return "books";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create/book")
     public String addBook(@ModelAttribute Book book) {
         bookService.addOrSaveBook(book);
         return "redirect:/";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create/book")
     public String addBook(Model model) {
         model.addAttribute("book", new Book(new Author(), new Genre()));
@@ -50,14 +47,12 @@ public class BookController {
         return "edit";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/delete/{book}")
     public String deleteBook(@PathVariable Book book) {
         bookService.delete(book);
         return "redirect:/";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/edit/{book}")
     public String editBook(@PathVariable Book book, Model model) {
         model.addAttribute("book", book);
