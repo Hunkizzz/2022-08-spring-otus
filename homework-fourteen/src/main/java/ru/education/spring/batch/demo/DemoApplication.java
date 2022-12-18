@@ -11,8 +11,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
 }

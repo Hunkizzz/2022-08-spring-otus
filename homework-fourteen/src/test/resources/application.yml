@@ -11,8 +11,8 @@ Spring:
     jdbc:
       initialize-schema: always
   shell:
-      interactive:
-        enabled: false
+    interactive:
+      enabled: false
   data:
     mongodb:
       port: 0
