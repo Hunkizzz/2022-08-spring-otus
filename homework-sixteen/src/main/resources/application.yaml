@@ -20,6 +20,16 @@ spring:
       ddl-auto: none
     show-sql: true
 
+logging:
+  file:
+    name: logfile.txt
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.web: DEBUG
+    guru.springframework.controllers: DEBUG
+    org.hibernate: DEBUG
 management:
   endpoints:
     web:
@@ -33,6 +43,3 @@ management:
       enabled: true
     diskspace:
       enabled: true
-logging:
-  file:
-    name: logfile.txt
