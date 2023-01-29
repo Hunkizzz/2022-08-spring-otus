@@ -1,0 +1,27 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./docker/prometheus-desktop.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - net
+    depends_on:
+      - app
+  app:
+    container_name: app
+  # build and start spring application inside a separate container using the same network as prometheus
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8085
+    ports:
+      - 8085:8085
+    networks:
+      - net
+networks:
+  net:
